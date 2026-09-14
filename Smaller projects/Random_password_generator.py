@@ -14,12 +14,12 @@ import string #Gives access to all characters that are lowercase, uppercase, dig
 
 def gen_password():
     length = int(input("Give a length to your password: "))
-    include_upper = input("Would you like to include uppercase for the password? (y/n): ").strip().lower()
-    include_special = input("Would you like to include special digits for the password? (y/n): ").strip().lower()
-    include_digits = input("Would you like to include digits for the password? (y/n): ").strip().lower()
+    include_upper = input("Would you like to include uppercase for the password? (Y/N): ").strip().lower()
+    include_special = input("Would you like to include special digits for the password? (Y/N): ").strip().lower()
+    include_digits = input("Would you like to include digits for the password? (Y/N): ").strip().lower()
     
     if length < 5:
-        print("Password length must be atleast 5 characters long.")
+        print("Password length must be at least 5 characters long.")
         return
     # This gives a string of all lowercase letters
     lower = string.ascii_lowercase
@@ -29,6 +29,19 @@ def gen_password():
     chars = lower + upper + spec + digits
     
     req_chars = []
-    print(chars) 
-
+    if upper:
+        req_chars.append(random.choice(upper))
+    if spec:
+        req_chars.append(random.choice(spec))
+    if digits:
+        req_chars.append(random.choice(digits))
+        
+    remaining_len = length - len(req_chars)
+    for _ in range(remaining_len):
+        req_chars.append(random.choice(chars))
+    
+    random.shuffle(req_chars)
+    password = ''.join(req_chars)
+    print(password)
+    
 gen_password()
