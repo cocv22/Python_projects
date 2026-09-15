@@ -15,7 +15,7 @@ def add_contact(contact_book):
         return
     try:  
         phone = int(input("Phone number: ").strip())
-    except ValueError:
+    except:
         print("Invalid phone number. Please enter a valid integer.")
         return
     email = input("Email address: ")
@@ -43,7 +43,7 @@ def edit_contact(contact_book):
         try:
             phone = int(input("New phone number (or press Enter to keep current): ").strip() or contact_book[name]['phone'])
             contact_book[name]['phone'] = phone
-        except ValueError:
+        except:
             print("Invalid phone number. Please enter a valid integer.")
         email = input("New email address (or press Enter to keep current): ")
         if email:
@@ -81,7 +81,7 @@ display_menu()
 while user != 6:
     try:   
         user = int(input("Enter your choice (1-7): "))
-    except ValueError:
+    except:
         print("Invalid input. When adding a contact, please enter a valid integer for the phone number.")
         continue
     if user == 1:
