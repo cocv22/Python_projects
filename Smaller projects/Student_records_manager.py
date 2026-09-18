@@ -11,6 +11,7 @@ def is_enrolled(name, course):
             return False
     else:
         print(f"Student '{name}' not found.")
+        return False
 
 def add_student(name, age, courses):
     if name in student_records:
@@ -25,7 +26,29 @@ def add_grade(name, grade):
         print(f"Grade {grade} added for student '{name}'.")
     else:    
         print(f"Student '{name}' not found.")
+
+def calculate_average_grade(name):
+    if name in student_records:
+        if student_records[name]['grades']:
+            average = sum(student_records[name]['grades'])/len(student_records[name]['grades'])
+            return average
+        else:
+            return 0
+    else:
+        print(f"Student {name} not found.")
+        return None
+
+def list_students_by_course(course):
+    students_in_course = [name for name, info in student_records.items() if course in info['courses']]
+    if students_in_course:
+        return students_in_course
+    else:
+        return []
     
+def filter_top_students(threshold):
+    smart_kids = [name for name in student_records if calculate_average_grade(name) > threshold]
+    return smart_kids
+
 add_student("Alice", 20, ["Math", "Physics"])
 add_student("Bob", 22, ["Biology", "Chemistry"])
 add_grade("Alice", 90)
