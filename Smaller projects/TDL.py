@@ -20,8 +20,20 @@ def view_tasks(tasks):
             status = "[Completed]" if task["complete"] else "[Pending]"
             print(f"{ind}. {task['description']} | {status}")
 
-def mark_task_complete():
-    pass
+def mark_task_complete(tasks):
+    task_list = tasks["task"]
+    try:
+        which_to_update = int(input("Enter the number of the task you wish to update: ")) - 1
+    except:
+        print("Please enter a number/int")
+        return    
+        
+    if len(task_list) == 0:
+        print("No tasks to update.")
+    else:
+        task_list[which_to_update]['complete'] = True
+        save_tasks(tasks)
+        print("Task updated successfully.")
 
 def save_tasks(tasks):
     try:
@@ -57,7 +69,7 @@ def main():
         elif choice == "2":
             create_tasks(tasks)
         elif choice == "3":
-            mark_task_complete()
+            mark_task_complete(tasks)
         elif choice == "4":
             print("Exiting the program. Goodbye!")
             break
