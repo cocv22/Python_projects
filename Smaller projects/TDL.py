@@ -75,7 +75,8 @@ def display_list_menu():
     print("2. Add task")
     print("3. Complete task")
     print("4. See option menu")
-    print("5. Exit")
+    print("5. Delete a task")
+    print("6. Exit")
 
 def main():
     tasks = load_tasks()
@@ -93,6 +94,8 @@ def main():
         elif choice == "4":
             display_list_menu()
         elif choice == "5":
+            delete_task(tasks)
+        elif choice == "6":
             print("Exiting the program. Goodbye!")
             break
         else:
