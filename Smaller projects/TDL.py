@@ -28,6 +28,7 @@ def create_tasks():
 
 def main():
     tasks = load_tasks()
+    print(tasks)
     while True:
         print("\nTo-Do List Menu:")
         print("1. View Tasks")
