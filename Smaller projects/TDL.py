@@ -54,7 +54,6 @@ def create_tasks(tasks):
 
 def display_list_menu():
     print("\nTo-Do List Menu:")
-    print("5. See option menu")
     print("1. View tasks")
     print("2. Add task")
     print("3. Complete task")
