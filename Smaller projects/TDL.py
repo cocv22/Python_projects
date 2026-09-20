@@ -62,10 +62,10 @@ def delete_task(tasks):
     else:
         try:
             which_to_delete = int(input("Enter the number of the task you wish to delete: ")) - 1
+            task_list.pop(which_to_delete)
         except:
-            print("Please enter a number/int")
+            print("Please enter a valid number/int")
             return
-        task_list.pop(which_to_delete)
         save_tasks(tasks)
         print("Task deleted succesfully.")
 
