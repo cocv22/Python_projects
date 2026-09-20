@@ -19,7 +19,7 @@ def view_tasks(tasks):
         for ind, task in enumerate(task_list, 1):
             status = "[Completed]" if task["complete"] else "[Pending]"
             print(f"{ind}. {task['description']} | {status}")
-
+        print("\n")
 def mark_task_complete(tasks):
     task_list = tasks["tasks"]
     try:
