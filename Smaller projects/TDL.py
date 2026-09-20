@@ -21,7 +21,7 @@ def view_tasks(tasks):
             print(f"{ind}. {task['description']} | {status}")
 
 def mark_task_complete(tasks):
-    task_list = tasks["task"]
+    task_list = tasks["tasks"]
     try:
         which_to_update = int(input("Enter the number of the task you wish to update: ")) - 1
     except:
