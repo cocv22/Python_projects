@@ -15,7 +15,7 @@ def view_tasks(tasks):
     if len(task_list) == 0:
         print("No tasks to display")
     else:
-        print("Your To-Do list: ")
+        print("Your To-Do list: \n")
         for ind, task in enumerate(task_list, 1):
             status = "[Completed]" if task["complete"] else "[Pending]"
             print(f"{ind}. {task['description']} | {status}")
