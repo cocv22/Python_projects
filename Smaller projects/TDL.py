@@ -10,8 +10,15 @@ def load_tasks():
     except:
         return {"tasks": []}
 
-def view_tasks():
-    pass
+def view_tasks(tasks):
+    task_list = tasks["tasks"]
+    if len(task_list) == 0:
+        print("No tasks to display")
+    else:
+        print("Your To-Do list: ")
+        for ind, task in enumerate(task_list, 1):
+            status = "[Completed]" if task["complete"] else "[Pending]"
+            print(f"{ind}. {task['description']} | {status}")
 
 def mark_task_complete():
     pass
@@ -46,7 +53,7 @@ def main():
         choice = input("Enter your choice: ").strip()
         
         if choice == "1":
-            view_tasks()
+            view_tasks(tasks)
         elif choice == "2":
             create_tasks(tasks)
         elif choice == "3":
