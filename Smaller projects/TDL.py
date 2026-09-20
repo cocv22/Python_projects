@@ -22,18 +22,19 @@ def view_tasks(tasks):
         print("\n")
 def mark_task_complete(tasks):
     task_list = tasks["tasks"]
-    try:
-        which_to_update = int(input("Enter the number of the task you wish to update: ")) - 1
-    except:
-        print("Please enter a number/int")
-        return    
-        
+    
     if len(task_list) == 0:
         print("No tasks to update.")
     else:
+        try:
+            which_to_update = int(input("Enter the number of the task you wish to update: ")) - 1
+        except:
+            print("Please enter a number/int")
+            return   
         task_list[which_to_update]['complete'] = True
         save_tasks(tasks)
         print("Task updated successfully.")
+
 
 def save_tasks(tasks):
     try:
@@ -51,6 +52,22 @@ def create_tasks(tasks):
         print("Task added.")
     else:
         print("Description can't be empty")
+
+
+def delete_task(tasks):
+    task_list = tasks["tasks"]
+    
+    if len(task_list) == 0:
+        print("There's no task to delete.")
+    else:
+        try:
+            which_to_delete = int(input("Enter the number of the task you wish to delete: ")) - 1
+        except:
+            print("Please enter a number/int")
+            return
+        task_list.pop(which_to_delete)
+        save_tasks(tasks)
+        print("Task deleted succesfully.")
 
 def display_list_menu():
     print("\nTo-Do List Menu:")
