@@ -52,16 +52,20 @@ def create_tasks(tasks):
     else:
         print("Description can't be empty")
 
+def display_list_menu():
+    print("\nTo-Do List Menu:")
+    print("5. See option menu")
+    print("1. View tasks")
+    print("2. Add task")
+    print("3. Complete task")
+    print("4. See option menu")
+    print("5. Exit")
+
 def main():
     tasks = load_tasks()
     
-    while True:
-        print("\nTo-Do List Menu:")
-        print("1. View Tasks")
-        print("2. Add Task")
-        print("3. Complete Task")
-        print("4. Exit")
-        
+    display_list_menu()
+    while True:       
         choice = input("Enter your choice: ").strip()
         
         if choice == "1":
@@ -71,6 +75,8 @@ def main():
         elif choice == "3":
             mark_task_complete(tasks)
         elif choice == "4":
+            display_list_menu()
+        elif choice == "5":
             print("Exiting the program. Goodbye!")
             break
         else:
