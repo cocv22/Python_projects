@@ -28,12 +28,12 @@ def mark_task_complete(tasks):
     else:
         try:
             which_to_update = int(input("Enter the number of the task you wish to update: ")) - 1
+            task_list[which_to_update]['complete'] = True
+            save_tasks(tasks)
+            print("Task updated successfully.")
         except:
-            print("Please enter a number/int")
+            print("Please enter a valid number/int")
             return   
-        task_list[which_to_update]['complete'] = True
-        save_tasks(tasks)
-        print("Task updated successfully.")
 
 
 def save_tasks(tasks):
@@ -63,11 +63,12 @@ def delete_task(tasks):
         try:
             which_to_delete = int(input("Enter the number of the task you wish to delete: ")) - 1
             task_list.pop(which_to_delete)
+            save_tasks(tasks)
+            print("Task deleted succesfully.")
         except:
             print("Please enter a valid number/int")
             return
-        save_tasks(tasks)
-        print("Task deleted succesfully.")
+
 
 def display_list_menu():
     print("\nTo-Do List Menu:")
