@@ -23,12 +23,19 @@ def save_tasks(tasks):
     except:
         print("Failed to save tasks to file.")
 
-def create_tasks():
-    pass
+def create_tasks(tasks):
+    description = input("Enter a description for this task: ").strip()
+    if description:
+        #We do tasks["tasks"] since the format isn't that the dictionary iis named tasks. rather, we enter a dictionary with the value "tasks" so we must access "tasks".
+        tasks["tasks"].append({"description": description, "complete": False})
+        save_tasks(tasks)
+        print("Task added.")
+    else:
+        print("Description can't be empty")
 
 def main():
     tasks = load_tasks()
-    print(tasks)
+    
     while True:
         print("\nTo-Do List Menu:")
         print("1. View Tasks")
@@ -41,7 +48,7 @@ def main():
         if choice == "1":
             view_tasks()
         elif choice == "2":
-            create_tasks()
+            create_tasks(tasks)
         elif choice == "3":
             mark_task_complete()
         elif choice == "4":
