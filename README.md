@@ -1,3 +1,3 @@
 Hello World
 
-My first own Git Repo.
+My first own Git Repo. :)
