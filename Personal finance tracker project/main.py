@@ -11,7 +11,7 @@ class CSV:
             pd.read_csv(cls.CSV_FILE)
         except FileNotFoundError:
             # Gets a data frame explained in 4 columns, then we turn it into a CSV file with the same directory as the python file
-            df = pd.DataFrame(columns=["date ", "amount ", "category ", "description "])
+            df = pd.DataFrame(columns=["date", "amount", "category", "description"])
             df.to_csv(cls.CSV_FILE, index=False) #Index=False essentially means we're not gonna be sorting the dataframe by indexing it
 
 CSV.initialize_csv()
