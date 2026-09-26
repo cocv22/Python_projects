@@ -1,10 +1,12 @@
 import pandas as pd
 import csv
 from datetime import datetime
+from data_entry import get_amount, get_category, get_description, get_date
 
 class CSV:
     CSV_FILE = "finance_data.csv"
     COLUMNS = ["date", "amount", "category", "description"]
+    FORMAT = "%d-%m-%Y"
     
     @classmethod #Will have access to the class itself but not an instance of it.
     def initialize_csv(cls):
@@ -26,6 +28,21 @@ class CSV:
             writer = csv.DictWriter(csvfile, fieldnames=cls.COLUMNS)
             writer.writerow(new_entry)
         print("Entry added succesfully")
+    
+    @classmethod
+    def get_transactions(cls, start_date, end_date):
+        df = pd.read.csv(cls.CSV_FILE)
+        #with panda you can access the column. Also, this converts all dates in the column to the specified format
+        df["date"] = pd.to_datetime(df["date"], format=CSV.FORMAT)
+        #Here we get the star_date string input and turn it into the correct format
+        start_date = datetime.strptime(start_date, CSV.FORMAT)
+
+def add():
+    CSV.initialize_csv()
+    date = get_date("Enter the date of the transaction (dd-mm-yyyy) or press enter for today's date: ", allow_default=True)
+    amount = get_amount()
+    category = get_category()
+    description = get_description()
+    CSV.add_entry(date, amount, category, description)
             
-CSV.initialize_csv()
-CSV.add_entry("20-07-2024", 125.65, "Income", "Salary")
+add()
