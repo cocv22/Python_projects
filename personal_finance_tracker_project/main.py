@@ -31,12 +31,32 @@ class CSV:
     
     @classmethod
     def get_transactions(cls, start_date, end_date):
-        df = pd.read.csv(cls.CSV_FILE)
+        df = pd.read_csv(cls.CSV_FILE)
         #with panda you can access the column. Also, this converts all dates in the column to the specified format
         df["date"] = pd.to_datetime(df["date"], format=CSV.FORMAT)
         #Here we get the star_date string input and turn it into the correct format
         start_date = datetime.strptime(start_date, CSV.FORMAT)
-
+        end_date = datetime.strptime(end_date, CSV.FORMAT)
+        # & is used when working with pandas specifically.
+        mask = (df["date"] >= start_date) & (df["date"] <= end_date)
+        # Returns a df where the mask above is true
+        filtered_df = df.loc[mask]
+        
+        if filtered_df.empty:
+            print("No transactions found in the date range.")
+        else:
+            print(f"Transactions from {start_date.strftime(CSV.FORMAT)} to {end_date.strftime(CSV.FORMAT)}")
+            print(filtered_df.to_string(index=False, formatters={"date": lambda x: x.strftime(CSV.FORMAT)}))
+        # This gets all the rows where category is equal to income, feature of panda      
+            total_income = filtered_df[filtered_df["category"] == "Income"]["amount"].sum()
+            total_expense = filtered_df[filtered_df["category"] == "Expense"]["amount"].sum()
+            print("\nSummary:")
+            print(f"Total Income: ${total_income:.2f}")
+            print(f"Total Expense: ${total_expense:.2f}")
+            print(f"Net savings: ${(total_income - total_expense):.2f}")
+    
+        return filtered_df
+            
 def add():
     CSV.initialize_csv()
     date = get_date("Enter the date of the transaction (dd-mm-yyyy) or press enter for today's date: ", allow_default=True)
@@ -44,5 +64,5 @@ def add():
     category = get_category()
     description = get_description()
     CSV.add_entry(date, amount, category, description)
-            
-add()
+
+CSV.get_transactions("18-07-2024", "25-09-2030") 
