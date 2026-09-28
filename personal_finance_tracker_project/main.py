@@ -2,6 +2,7 @@ import pandas as pd
 import csv
 from datetime import datetime
 from data_entry import get_amount, get_category, get_description, get_date
+import matplotlib.pyplot as plt
 
 class CSV:
     CSV_FILE = "finance_data.csv"
@@ -65,4 +66,57 @@ def add():
     description = get_description()
     CSV.add_entry(date, amount, category, description)
 
-CSV.get_transactions("18-07-2024", "25-09-2030") 
+def plot_transactions(df):
+    #Index is the way in which we locate and manipulate different rows
+    #We're using 'date' to find information by the date to create the plot
+    df.set_index("date", inplace=True)
+    #(fill)resample('D') makes a value for every single day, allowing for aggragation of different values on the same day
+    #We sum values to get values on the same date and adding them.
+    #reindex makes sure the spaces conform to the index that's been set, and fills empty values with zero
+    income_df = (
+        df[df["category"] == "Income"]["amount"]
+        .resample("D")
+        .sum()
+        .reindex(df.index, fill_value=0)
+        ) 
+    expense_df = (
+        df[df["category"] == "Expense"]["amount"]
+        .resample("D")
+        .sum()
+        .reindex(df.index, fill_value=0)
+        )
+    #sets up scree for plot
+    plt.figure(figsize =(15, 8))
+    plt.plot(income_df.index, income_df, label="Income", color="g")
+    plt.plot(expense_df.index, expense_df, label="Expense", color="r")
+    plt.xlabel("Date")
+    plt.ylabel("Amount")
+    plt.title("Income and Expenses")
+    #Allows the label for different colored lines to be visible.
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+def main():
+    while True:
+        print("\n1. Add new transaction")
+        print("2. View transactions and summary within a date range")
+        print("3. Exit")
+        choice = input("Enter your choice (1-3): ")
+        if choice == "1":
+            add()
+        elif choice == "2":
+            start_date = get_date("Enter start date (dd-mm-yyyy): ")
+            end_date = get_date("Enter end date (dd-mm-yyyy): ")
+            df = CSV.get_transactions(start_date, end_date)
+            if input("Would you like to see a plot? (y/n) ").lower() == "y":
+                plot_transactions(df)
+        elif choice == "3":
+            print("Exiting...")
+            break
+        else:
+            print("Invalid choice. Enter a number 1-3.")
+
+# Only runs if file is run directly. Essentially protects the main()/code in the main function
+if __name__ == "__main__":
+    main()
